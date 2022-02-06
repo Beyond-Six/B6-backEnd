@@ -34,11 +34,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 const indexRouter = require('./routes/index');
 const test = require('./routes/test');
 const md = require('./routes/md');
+const file = require('./routes/fileSystem');
 
 //router setup
 app.use('/', indexRouter);
 app.use('/api/test/', test);
 app.use('/api/md/', md);
+app.use('/api/file', file);
 
 app.use(function(req, res, next) {
   next(createError(404));
