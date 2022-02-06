@@ -6,7 +6,7 @@ require('dotenv').config();
 const db = require('../module/database/sql/test');
 
 router.get('/', async (req, res) => {
-    res.send("/crAccount<br>/?")
+    res.send("/crAccount<br>/getAccount")
 });
 
 router.get('/crAccount', async (req, res)=> {

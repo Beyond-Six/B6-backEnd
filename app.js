@@ -33,10 +33,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 //router require
 const indexRouter = require('./routes/index');
 const test = require('./routes/test');
+const md = require('./routes/md');
 
 //router setup
 app.use('/', indexRouter);
 app.use('/api/test/', test);
+app.use('/api/md/', md);
 
 app.use(function(req, res, next) {
   next(createError(404));
