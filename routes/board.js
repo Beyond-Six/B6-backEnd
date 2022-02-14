@@ -29,14 +29,25 @@ router.get('/upBoard', async (req, res) => {
         const COMMENT_ID = req.query.COMMENT_ID;
         const LOCATION_ID = req.query.LOCATION_ID;
         const PET_ID = req.query.PET_ID;
-        const TAG_ID = req.query.TAG_ID;
+
 
         db.upBoard(TITLE, CONTENT, ROLL_ID, UID, LIKES, COMMENT_ID, LOCATION_ID, PET_ID, function (err, data){
-            db.upTag(data[0].BID,TAG_ID);
-            res.json( {message:"200"});
+            res.json( {message:"200", data})
         });
     } catch (e) {
         res.json( {message:"500", data:e})
+    }
+});
+
+router.get('/upTag', async (req, res) => {
+    const TAG_ID = req.query.TAG_ID;
+    const BID = req.query.BID;
+    try {
+        db.upTag(BID, TAG_ID);
+        res.json({message:"200"});
+    }
+    catch (e) {
+        res.json( {message:"500", data:e});
     }
 });
 
