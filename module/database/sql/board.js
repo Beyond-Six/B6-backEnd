@@ -21,4 +21,14 @@ function getBoard(LOCATION_ID, PET_ID, TAG_ID, callback) {
     });
 }
 
+function upBoard(TITLE, CONTENT, ROLL_ID, UID, LIKES, COMMENT_ID, LOCATION_ID, PET_ID) {
+    let q = "insert into sanjose.BOARD(TITLE, CONTENT, ROLL_ID, UID, `WRITE`, LIKES, COMMENT_ID, LOCATION_ID, PET_ID) values($0, $1, $2, $3, now(), $4, $5, $6, $7)";
+    q = dbConn.sqlBuilder(q, [TITLE, CONTENT, ROLL_ID, UID, LIKES, COMMENT_ID, LOCATION_ID, PET_ID])
+
+    dbConn.ExcuteQuery(q, [], function (err, data){
+        return;
+    });
+}
+
 module.exports.getBoard = getBoard;
+module.exports.upBoard = upBoard;
