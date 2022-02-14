@@ -21,14 +21,28 @@ function getBoard(LOCATION_ID, PET_ID, TAG_ID, callback) {
     });
 }
 
-function upBoard(TITLE, CONTENT, ROLL_ID, UID, LIKES, COMMENT_ID, LOCATION_ID, PET_ID) {
+function upBoard(TITLE, CONTENT, ROLL_ID, UID, LIKES, COMMENT_ID, LOCATION_ID, PET_ID, callback) {
     let q = "insert into sanjose.BOARD(TITLE, CONTENT, ROLL_ID, UID, `WRITE`, LIKES, COMMENT_ID, LOCATION_ID, PET_ID) values($0, $1, $2, $3, now(), $4, $5, $6, $7)";
     q = dbConn.sqlBuilder(q, [TITLE, CONTENT, ROLL_ID, UID, LIKES, COMMENT_ID, LOCATION_ID, PET_ID])
 
     dbConn.ExcuteQuery(q, [], function (err, data){
-        return;
+        q = "select last_insert_id() as BID";
+        dbConn.ExcuteQuery(q, [], function (err, data){
+            return callback(err, data)
+        });
     });
+}
+
+function upTag(BID, TAG_ID) {
+    for (let i=0;i<TAG_ID.length;i++){
+        let q = "insert into sanjose.TAG_BOARD values($0, $1)";
+        q = dbConn.sqlBuilder(q, [BID, TAG_ID[i]]);
+        dbConn.ExcuteQuery(q, [], function (err, data){
+            return;
+        });
+    }
 }
 
 module.exports.getBoard = getBoard;
 module.exports.upBoard = upBoard;
+module.exports.upTag = upTag;
