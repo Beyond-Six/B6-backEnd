@@ -44,6 +44,26 @@ router.get('/createRoll', function (req,res){
     }
 });
 
+router.get('/getRoll', function (req, res) {
+    try {
+        const ROLL_ID = req.query.ROLL_ID;
+        let obj = [];
+        db.getRoll(ROLL_ID, function (err,data){
+           if (data[0]!=undefined) {
+               for(let i=0; i<data.length; i++){
+                   obj.push({
+                       DIR:data[i].DIR,
+                   });
+               }
+               res.json({message:"200", list:obj});
+           }
+           else res.json( {message:"500", data:"err"});
+        });
+    } catch (e){
+        res.json( {message:"500", data:e})
+    }
+});
+
 router.get('/upRoll', function (req, res) {
     try {
         const ROLL_ID = req.query.ROLL_ID;

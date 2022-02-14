@@ -20,5 +20,16 @@ function upRoll(ROLL_ID, DIR) {
     });
 }
 
+function getRoll(ROLL_ID, callback) {
+    let q = "select * from ROLL_LIST where ROLL_ID=$0";
+    q = dbConn.sqlBuilder(q, [ROLL_ID]);
+
+    dbConn.ExcuteQuery(q, [], function (err,data){
+        return callback(err,data);
+    });
+}
+
 module.exports.createRoll = createRoll;
 module.exports.upRoll = upRoll;
+module.exports.getRoll = getRoll;
+
