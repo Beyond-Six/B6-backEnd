@@ -3,8 +3,7 @@ const router = express.Router();
 const multer = require('multer');
 const fs = require('fs')
 const upload = multer({ dest: 'uploadedFiles/' });
-const { verifyToken } = require('../module/token/check');
-const token = require('../module/token/token');
+const db = require('../module/database/sql/file');
 
 function GetFilePath(dir, target) {
     let stream;
@@ -32,13 +31,38 @@ router.get('/imgDownload', function(req,res){
     }catch (e) { res.render('error')}
 });
 
+router.get('/createRoll', function (req,res){
+    try {
+        db.createRoll(function (err, data) {
+            if (data[0]!=undefined) {
+                res.json({message:"200", ROLL_ID:data[0].ROLL_ID});
+            }
+            else res.json( {message:"500", data:"err"});
+        });
+    } catch (e) {
+        res.json( {message:"500", data:e})
+    }
+});
+
+router.get('/upRoll', function (req, res) {
+    try {
+        const ROLL_ID = req.query.ROLL_ID;
+        const DIR = req.query.DIR;
+
+        db.upRoll(ROLL_ID, DIR);
+        res.json({message:"200"});
+    } catch (e) {
+        res.json( {message:"500", data:e})
+    }
+});
+
 router.get('/', function(req, res, next) {
     res.render('upload', { title: 'Express' });
 });
 
 router.post('/fileUpload', upload.single('file'), function(req,res){
     const file_name = req.file.filename;
-    res.send("success");
+    res.send(file_name);
 });
 
 module.exports = router;

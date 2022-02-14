@@ -40,7 +40,7 @@ const file = require('./routes/fileSystem');
 app.use('/', indexRouter);
 app.use('/api/test/', test);
 app.use('/api/md/', md);
-app.use('/api/file', file);
+app.use('/api/file/', file);
 
 app.use(function(req, res, next) {
   next(createError(404));

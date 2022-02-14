@@ -3,6 +3,7 @@ const db = require('./db');
 function sqlBuilder(sql, data){
     let i;
     for (i=0;i<data.length;i++){
+        if (data[i] == undefined) data[i] = '%';
         sql = sql.replace('$'+i.toString(), JSON.stringify(data[i]));
     }
     return sql;
