@@ -13,4 +13,15 @@ router.get('/getAccount', async (req, res) => {
     }
 });
 
+router.get('/getPet', async (req, res) => {
+    const UID = req.query.uid;
+    try {
+        db.getPet(UID, function (err, data){
+            res.json({message:"200", list:data});
+        });
+    } catch (e) {
+        res.json(({message:"200", data:e}))
+    }
+});
+
 module.exports = router;
