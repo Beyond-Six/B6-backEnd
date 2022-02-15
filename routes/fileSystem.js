@@ -46,7 +46,7 @@ router.get('/createRoll', function (req,res){
 
 router.get('/getRoll', function (req, res) {
     try {
-        const ROLL_ID = req.query.ROLL_ID;
+        const ROLL_ID = req.query.roll_id;
         let obj = [];
         db.getRoll(ROLL_ID, function (err,data){
            if (data[0]!=undefined) {
@@ -66,7 +66,7 @@ router.get('/getRoll', function (req, res) {
 
 router.get('/upRoll', function (req, res) {
     try {
-        const ROLL_ID = req.query.ROLL_ID;
+        const ROLL_ID = req.query.roll_id;
         const DIR = req.query.DIR;
 
         db.upRoll(ROLL_ID, DIR);

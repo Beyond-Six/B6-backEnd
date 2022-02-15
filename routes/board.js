@@ -4,9 +4,9 @@ const db = require('../module/database/sql/board');
 
 router.get('/getList', async (req, res) => {
     try {
-        const TAG_ID = req.query.TAG_ID;
-        const PET_ID = req.query.PET_ID;
-        const LOCATION_ID = req.query.LOCATION_ID;
+        const TAG_ID = req.query.tag_id;
+        const PET_ID = req.query.pet_id;
+        const LOCATION_ID = req.query.location_id;
 
         db.getBoard(LOCATION_ID, PET_ID, TAG_ID, function (err, data) {
             if (data[0]!=undefined) {
@@ -21,18 +21,18 @@ router.get('/getList', async (req, res) => {
 
 router.get('/upBoard', async (req, res) => {
     try {
-        const TITLE = req.query.TITLE;
-        const CONTENT = req.query.CONTENT;
-        const ROLL_ID = req.query.ROLL_ID;
-        const UID = req.query.UID;
-        const LIKES = req.query.LIKES;
-        const COMMENT_ID = req.query.COMMENT_ID;
-        const LOCATION_ID = req.query.LOCATION_ID;
-        const PET_ID = req.query.PET_ID;
+        const TITLE = req.query.title;
+        const CONTENT = req.query.content;
+        const ROLL_ID = req.query.roll_id;
+        const UID = req.query.uid;
+        const LIKES = req.query.likes;
+        const COMMENT_ID = req.query.comment_id;
+        const LOCATION_ID = req.query.location_id;
+        const PET_ID = req.query.pet_id;
 
 
         db.upBoard(TITLE, CONTENT, ROLL_ID, UID, LIKES, COMMENT_ID, LOCATION_ID, PET_ID, function (err, data){
-            res.json( {message:"200", data})
+            res.json( {message:"200", list:data})
         });
     } catch (e) {
         res.json( {message:"500", data:e})
@@ -40,14 +40,25 @@ router.get('/upBoard', async (req, res) => {
 });
 
 router.get('/upTag', async (req, res) => {
-    const TAG_ID = req.query.TAG_ID;
-    const BID = req.query.BID;
+    const TAG_ID = req.query.tag_id;
+    const BID = req.query.bid;
     try {
         db.upTag(BID, TAG_ID);
         res.json({message:"200"});
     }
     catch (e) {
         res.json( {message:"500", data:e});
+    }
+});
+
+router.get('/getComment', async (req, res) => {
+    const BID = req.query.bid;
+    try {
+        db.getComment(BID, function (err, data){
+           res.json({message:"200", list:data});
+        });
+    } catch (e) {
+        res.json(({message:"200", data:e}))
     }
 });
 

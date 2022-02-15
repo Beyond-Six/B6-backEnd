@@ -28,7 +28,8 @@ router.get('/getBrands', async (req, res) => {
 
 router.get('/getMdList', async (req, res) => {
     try {
-        db.getMdList(function (err, data) {
+        let MD_ID = req.query.md_id;
+        db.getMdList(MD_ID, function (err, data) {
             if (data[0]!=undefined) {
                 res.json({message:"200", list:data});
             }

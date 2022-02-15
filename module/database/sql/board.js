@@ -38,11 +38,21 @@ function upTag(BID, TAG_ID) {
         let q = "insert into sanjose.TAG_BOARD values($0, $1)";
         q = dbConn.sqlBuilder(q, [BID, TAG_ID[i]]);
         dbConn.ExcuteQuery(q, [], function (err, data){
-            return;
         });
     }
+    return;
 }
 
+function getComment(BID, callback) {
+    let q = "select * from sanjose.COMMENTS_V where BID=$0";
+    q = dbConn.sqlBuilder(q, [BID]);
+    dbConn.ExcuteQuery(q, [], function (err, data){
+       return callback(err,data);
+    });
+}
+
+
+module.exports.getComment = getComment;
 module.exports.getBoard = getBoard;
 module.exports.upBoard = upBoard;
 module.exports.upTag = upTag;

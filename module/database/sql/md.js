@@ -1,7 +1,9 @@
 const dbConn = require('../controller');
 
-function getMdList(callback) {
-    let q = "select * from sanjose.MD";
+function getMdList(MD_ID, callback) {
+    let q = "select * from MD_V where MD_ID like $0";
+
+    q = dbConn.sqlBuilder(q, [MD_ID]);
 
     dbConn.ExcuteQuery(q, [], function (err, data){
         return callback(err, data);
