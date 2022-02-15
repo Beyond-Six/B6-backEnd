@@ -36,6 +36,7 @@ const test = require('./routes/test');
 const md = require('./routes/md');
 const file = require('./routes/fileSystem');
 const board = require('./routes/board');
+const account = require('./routes/account');
 
 //router setup
 app.use('/', indexRouter);
@@ -43,6 +44,7 @@ app.use('/api/test/', test);
 app.use('/api/md/', md);
 app.use('/api/file/', file);
 app.use('/api/board/', board);
+app.use('/api/account', account);
 
 app.use(function(req, res, next) {
   next(createError(404));
